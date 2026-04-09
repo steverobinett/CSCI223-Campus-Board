@@ -1,0 +1,39 @@
+.form-container {
+    display: block;
+    background-color: #bbd9ff;
+    max-width: 60%;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+}
+
+div {
+   padding-bottom: 15px; 
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0199df;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #0199df;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
