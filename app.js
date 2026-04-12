@@ -34,6 +34,18 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'static-content', 'index.html'));
 });
 
+// GET register.html - Lei B
+app.get('/register.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'static-content', 'register.html'));
+});
+
+// POST /user/registration - form submission - Lei B
+app.post('/user/registration', (req, res) => {
+    console.log(req.body);
+    userRegistration.saveUser(req.body);
+    res.redirect(__dirname, '/static-content', 'login.html')
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
