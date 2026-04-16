@@ -4,21 +4,23 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+const registerUser = require('./registerUser');
 
-// Serve static files
-app.use('/css', express.static(path.join(__dirname, 'css')));
-app.use('/js', express.static(path.join(__dirname, 'js')));
+console.log(registerUser('scott', '1234'));
+console.log(registerUser('scott', 'wrong'));
+console.log(registerUser('fake', '1234'));
 
-// Home
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static-content', 'index.html'));
-});
-
-// Login page
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static-content', 'login.html'));
-});
+// Add user
+// store.add('users.json', {
+    // id: 1,
+    // username: 'scott'
+// });
+// 
+// Add event
+// store.add('events.json', {
+    // id: 1,
+    // title: 'Meet up with Rebecca'
+// });
 
 // Login form submission
 app.post('/user/login', (req, res) => {
