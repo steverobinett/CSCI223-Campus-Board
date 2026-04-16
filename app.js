@@ -5,17 +5,23 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-//Add user
-store.add('users.json', {
-    id: 1,
-    username: 'scott'
-});
+const registerUser = require('./registerUser');
 
-//Add event
-store.add('events.json', {
-    id: 1,
-    title: 'Meet up with Rebecca'
-});
+console.log(registerUser('scott', '1234'));
+console.log(registerUser('scott', 'wrong'));
+console.log(registerUser('fake', '1234'));
+
+// Add user
+// store.add('users.json', {
+    // id: 1,
+    // username: 'scott'
+// });
+// 
+// Add event
+// store.add('events.json', {
+    // id: 1,
+    // title: 'Meet up with Rebecca'
+// });
 
 //Get one user
 const user = store.getOne('users.json', 'username', 'scott');
