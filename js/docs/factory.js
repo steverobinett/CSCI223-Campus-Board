@@ -12,3 +12,15 @@ function createEvent({ title, description, date, location, category, createdBy }
     createdAt: new Date().toISOString()
   };
 }
+
+function createUser({firstName, lastName, password}){
+  return{
+    userId: uuidv4(),
+    firstName: firstName ?? '',
+    lastName: lastName ?? '',
+    password: password ?? '',
+    dateCreated: new Date().toISOString()
+  };
+}
+
+module.exports ={createEvent, createUser};
