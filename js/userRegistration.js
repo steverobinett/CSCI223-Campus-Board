@@ -1,11 +1,13 @@
-const path = require("path");
 const USR_REG = "users.json";
+const bcrypt = require("bcrypt");
 const fs = require("fs");
+const crypto = require("crypto");
+
 
 // Function to make sure passwords match by Lei B
-function checkPassword(form) {
-    password1 = form.pwd.value;
-    password2 = form.verifypwd.value;
+async function checkPassword(user) {
+    let password1 = user.pwd.value;
+    let password2 = user.verifypwd.value;
 
     // No password input
     if (password1 == '')
@@ -28,8 +30,6 @@ function checkPassword(form) {
     
 // Encrypt the password?
 
-const bcrypt = require("bcrypt");
-
 async function hashPassword(pwd) {
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(pwd, saltRounds);
@@ -37,9 +37,45 @@ async function hashPassword(pwd) {
 }
 
 async function verifyPassword(pwd, hashedPassword) {
-    const isValid = await bcrypt.compare(password, hashedPassword);
+    const isValid = await bcrypt.compare(pwd, hashedPassword);
     return isValid;
 }
 
-module.exports = { checkPassword, hashPassword, verifyPassword }
+async function saveUser(user) {
+    try {
+        let allUsers = [];
+
+        if (fs.existsSync(USR_REG)) {
+            const existingUsers = fs.readFileSync(USR_REG, "utf-8");
+            allUsers = JSON.parse(existingUsers);
+        }
+
+        // Duplicate email check
+        const existingEmail = allUsers.find(u => u.userEmail === user.email);
+        if (existingEmail) {
+            throw new Error("Email already in use!")
+        };
+
+        const hashedPwd = await hashPassword(user.pwd);
+
+        const newUser = {
+            id: crypto.randomUUID(),
+            userName: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            userEmail: user.email,
+            userPassword: hashedPwd
+        };
+        
+        allUsers.push(newUser);
+
+        fs.writeFileSync(USR_REG, JSON.stringify(allUsers, null, 2), "utf-8");
+    }
+    catch (err) {
+        console.log(`Error on Save User: ${err.message}`);
+        throw err;
+        }
+}
+
+module.exports = { checkPassword, hashPassword, verifyPassword, saveUser };
 

@@ -12,24 +12,34 @@
         <h1>User Registration</h1>
         <form action="/user/registration" method="POST">
             <div class="registration-form">
-                <label for="username"><b>User Name</b><span class="required">*</span></label>
-                <input type="text" id="username" name="registration" required>
+                <label for="userName"><b>User Name</b><span class="required">*</span></label>
+                <input type="text" id="userName" name="userName" required>
+            </div>
+
+            <div class="registration-form">
+                <label for="firstName"><b>First Name</b><span class="required">*</span></label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+
+            <div class="registration-form">
+                <label for="lastName"><b>Last Name</b><span class="required">*</span></label>
+                <input type="text" id="lastName" name="lastName" required>
             </div>
 
             <div class="registration-form">
                 <label for="email"><b>Email</b><span class="required">*</span></label>
-                <input type="email" id="email" pattern=".+@example\.com">
+                <input type="email" id="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
             </div>
 
             <div class="registration-form">
                 <label for="password"><b>Password</b><span class="required">* </span></label>
-                <input type="password" placeholder="Enter Password" id="pwd" name="pwd" pattern="^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" 
+                <input type="password" placeholder="Enter Password" name="pwd" id="pwd" pattern="^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*\\-])[A-Za-z0-9#?!@$%^&*\\-]{8,}$"
                 title="Minimum of 8 characters. Should have at least one special character and one number and one UpperCase Letter.">
             </div>
 
             <div class="registration-form">
                 <label for="verify-pwd"><b>Verify Password</b><span class="required">*</span></label>
-                <input type="password" placeholder="Verify Password" id="verifypwd" name="verify-pwd" required>
+                <input type="password" placeholder="Verify Password" name="verifypwd" id="verifypwd" required>
             </div>
 
             <label for="remember">
@@ -39,8 +49,8 @@
             <p>By creating an account, you agree to our <a href="#">Terms of Service</a>.</p>
 
             <div class="SubmitCancel">
-                <button type="button" class="cancelbtn"><b>Cancel</b></button>
-                <button type="button" class="submitbtn"><b>Submit</b></button>
+                <button type="reset" class="cancelbtn"><b>Cancel</b></button>
+                <button type="submit" class="submitbtn"><b>Submit</b></button>
             </div>
         </form>
     </div>
