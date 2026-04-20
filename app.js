@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = 3000;
+const { saveUser } = require('./js/userRegistration');
 
 const registerUser = require('./registerUser');
 
@@ -37,6 +38,33 @@ app.post('/user/login', (req, res) => {
   }
 
   res.json({ success: true, message: 'Logged in.' });
+});
+
+// GET register.html - Lei B
+app.get('/register.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'static-content', 'register.html'));
+});
+
+// POST /user/registration - form submission - Lei B
+app.post('/user/registration', async (req, res) => {
+    try {
+        console.log('POST /user/registration hit');
+        console.log(req.body);
+
+        // validate passwords
+        if (req.body.pwd !== req.body.verifypwd) {
+            return res.status(400).send("Passwords do not match.");
+        }
+        await saveUser(req.body);
+        res.redirect('/');       
+        } catch (err) {
+            if (err.message === "Email already in use!") {
+                return res.status(400).send("Email is already registered!")
+            }
+        console.log(err);
+        res.status(500).send("Error saving user");
+    }
+    
 });
 
 app.listen(PORT, () => {
