@@ -1,10 +1,7 @@
 [
   {
-    "id": "f525f1d5-b343-450b-8d82-7fbbae821e9b",
-    "userName": "Elekia",
-    "firstName": "LeiHala",
-    "lastName": "Booth",
-    "userEmail": "leihala.hand@gmail.com",
-    "userPassword": "$2b$12$SwCxO8X3kkyiB8cP14gvvuil4ld0C4QCdaxBIM38kxZ4kQZcBMbLS"
+    "id": 1,
+    "username": "scott",
+    "password": "1234"
   }
 ]
