@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/form.css">
+  <style>
+    .error { color: red; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Login</h1>
+
+    <div class="registration-form">
+      <label><b>User Name</b><span class="required">*</span></label>
+      <input type="text" id="username">
+      <span class="error" id="username-error"></span>
+    </div>
+
+    <div class="registration-form">
+      <label><b>Password</b><span class="required">*</span></label>
+      <input type="password" id="password">
+      <span class="error" id="password-error"></span>
+    </div>
+
+    <span class="error" id="login-error"></span>
+
+    <div class="SubmitCancel">
+      <button type="button" onclick="window.location.href='/'"><b>Cancel</b></button>
+      <button type="button" onclick="handleLogin()"><b>Login</b></button>
+    </div>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      document.getElementById('username-error').textContent = username ? '' : 'Username is required.';
+      document.getElementById('password-error').textContent = password ? '' : 'Password is required.';
+
+      if (!username || !password) return;
+
+      fetch('/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) window.location.href = '/';
+        else document.getElementById('login-error').textContent = data.message;
+      })
+      .catch(() => {
+        document.getElementById('login-error').textContent = 'Server error. Please try again.';
+      });
+    }
+  </script>
+</body>
+</html>
