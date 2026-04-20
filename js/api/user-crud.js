@@ -46,5 +46,20 @@ function getOne(userId){
     }
     return user
 }
+ function update(userObj){
+    //TODO: determine which properties are updateable
 
-module.exports = {add, getAll, getOne}
+    let updateObj = getOne(userObj.userId)
+    if (!userObj){
+        console.log(`Update fail - invlaid id`);
+        return false        
+    }
+    else{
+        //update fields
+        //delete old obj
+        //push new obj
+    }
+
+    return true
+ }
+module.exports = {add, getAll, getOne, update}

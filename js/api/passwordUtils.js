@@ -14,7 +14,7 @@ function resetPassword(userId, currPassword, newPasswd) {
       return res.status(401).json({ error: 'Current password is incorrect.' });
     }
 
-    // 6. Prevent reuse — new password must differ from the current one
+    // Prevent reuse — new password must differ from the current one
     const sameAsOld =  bcrypt.compare(newPassword, user.password);
     if (sameAsOld) {
       return res.status(400).json({ error: 'New password must differ from the current password.' });

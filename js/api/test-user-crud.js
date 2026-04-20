@@ -17,9 +17,7 @@ allUsers.forEach(element => {
     console.log(JSON.stringify(element,null,2));
     
 });
-
 console.log(`There are a total of ${allUsers.length}`);
-
 
 //Test: getone
 const userId = "dc242461-b94a-4d96-98f2-b6b9a92e9df0"

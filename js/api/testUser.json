@@ -82,5 +82,12 @@
     "lastName": "Test User",
     "password": "hashedpwd",
     "dateCreated": "2026-04-18T02:07:24.956Z"
+  },
+  {
+    "userId": "ebe802d0-71ae-451f-96ca-8f6b133651f8",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-19T06:51:55.346Z"
   }
 ]
