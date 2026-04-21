@@ -11,17 +11,6 @@ console.log(registerUser('scott', '1234'));
 console.log(registerUser('scott', 'wrong'));
 console.log(registerUser('fake', '1234'));
 
-// Add user
-// store.add('users.json', {
-    // id: 1,
-    // username: 'scott'
-// });
-// 
-// Add event
-// store.add('events.json', {
-    // id: 1,
-    // title: 'Meet up with Rebecca'
-// });
 
 // Login form submission
 app.post('/user/login', (req, res) => {
