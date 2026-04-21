@@ -54,9 +54,9 @@ function getOne(userId){
         return false        
     }
     else{
-        const allUsers = getAll()
-        // const targetUser = allUsers.find(u => u.userId === userId)
-        
+//         const updatedEvents = events.map(event =>
+//   event.id === updatedEvent.id ? updatedEvent : event
+// );
     }
 
     return true
