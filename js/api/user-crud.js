@@ -1,9 +1,9 @@
 const fs = require("fs");
+const { get } = require("http");
 const DATAFILE = "testUser.json";
 
 function add(userObj) {
   // Adds a new object to json file
-  let status = true
   let data = [];
 
   if (fs.existsSync(DATAFILE)) {
@@ -13,14 +13,14 @@ function add(userObj) {
     data = text ? JSON.parse(text) : [];
   }
   else{
-    status = false
+    return false
   }
 
   data.push(userObj); // add new object to array
 
   fs.writeFileSync(DATAFILE, JSON.stringify(data, null, 2)); //Save updated array
 
-  return status;
+  return true;
 }
 
 function getAll() {
@@ -34,12 +34,12 @@ function getAll() {
   }
    return data
 
-}
+} 
 
 function getOne(userId){
-    allUsers = getAll()
+    let allUsers = getAll()
 
-    user = allUsers.find(u => u.userId === userId)
+    const user = allUsers.find(u => u.userId === userId)
     if ( !user){
         console.log(`User id ${userId} not found`);
         return null
@@ -47,17 +47,16 @@ function getOne(userId){
     return user
 }
  function update(userObj){
-    //TODO: determine which properties are updateable
-
+    // decided to use a 'full repacement approach
     let updateObj = getOne(userObj.userId)
-    if (!userObj){
-        console.log(`Update fail - invlaid id`);
+    if (!updateObj){
+        console.log(`Update fail - invalid id`);
         return false        
     }
     else{
-        //update fields
-        //delete old obj
-        //push new obj
+        const allUsers = getAll()
+        // const targetUser = allUsers.find(u => u.userId === userId)
+        
     }
 
     return true
