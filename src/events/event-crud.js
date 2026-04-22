@@ -54,9 +54,11 @@ function update(eventObj) {
     console.log(`Update fail - invalid id`);
     return false;
   } else {
-
+    const updatedEvents = events.map(event => 
+        event.id === updatedEvents.id ? updatedEvent : event
+    );
   }
-  
+
   return true;
 }
 
