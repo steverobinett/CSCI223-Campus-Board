@@ -1,16 +1,31 @@
-const store = require('./dataStore');
-const express = require('express');
-const path = require('path');
-const app = express();
-const PORT = 3000;
+const store        = require('./dataStore');
+const express      = require('express');
+const path         = require('path');
 const { saveUser } = require('./js/userRegistration');
+const app          = express();
+const PORT         = 3000;
 
-const registerUser = require('./registerUser');
+// Path constants
+const STATIC = path.join(__dirname, 'static-content');
+const CSS    = path.join(__dirname, 'css');
+const JS     = path.join(__dirname, 'js');
 
-console.log(registerUser('scott', '1234'));
-console.log(registerUser('scott', 'wrong'));
-console.log(registerUser('fake', '1234'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// Serve static files
+app.use('/css', express.static(CSS));
+app.use('/js', express.static(JS));
+
+// Home
+app.get('/', (req, res) => {
+  res.sendFile(path.join(STATIC, 'index.html'));
+});
+
+// Login page
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(STATIC, 'login.html'));
+});
 
 // Login form submission
 app.post('/user/login', (req, res) => {
@@ -29,31 +44,25 @@ app.post('/user/login', (req, res) => {
   res.json({ success: true, message: 'Logged in.' });
 });
 
-// GET register.html - Lei B
-app.get('/register.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'static-content', 'register.html'));
+// Register page
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(STATIC, 'register.html'));
 });
 
 // POST /user/registration - form submission - Lei B
 app.post('/user/registration', async (req, res) => {
-    try {
-        console.log('POST /user/registration hit');
-        console.log(req.body);
-
-        // validate passwords
-        if (req.body.pwd !== req.body.verifypwd) {
-            return res.status(400).send("Passwords do not match.");
-        }
-        await saveUser(req.body);
-        res.redirect('/');       
-        } catch (err) {
-            if (err.message === "Email already in use!") {
-                return res.status(400).send("Email is already registered!")
-            }
-        console.log(err);
-        res.status(500).send("Error saving user");
+  try {
+    if (req.body.pwd !== req.body.verifypwd) {
+      return res.status(400).send('Passwords do not match.');
     }
-    
+    await saveUser(req.body);
+    res.redirect('/');
+  } catch (err) {
+    if (err.message === 'Email already in use!') {
+      return res.status(400).send('Email is already registered.');
+    }
+    res.status(500).send('Error saving user.');
+  }
 });
 
 app.listen(PORT, () => {
