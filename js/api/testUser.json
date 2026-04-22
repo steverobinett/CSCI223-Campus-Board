@@ -1,0 +1,93 @@
+[
+  {
+    "userId": "f8c84721-2924-4ac3-8d20-8b40a62c4df3",
+    "firstName": "Mister",
+    "lastName": "Test",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-17T19:35:29.516Z"
+  },
+  {
+    "userId": "195bbe33-6e17-4577-9563-47a83dc3d519",
+    "firstName": "Mister",
+    "lastName": "Test",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-17T19:36:02.776Z"
+  },
+  {
+    "userId": "4d58e6c8-7524-43fe-aabf-68728eb8deee",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-17T19:54:05.750Z"
+  },
+  {
+    "userId": "e9893574-b653-4749-89f3-7ef6639e8d9d",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T01:48:06.260Z"
+  },
+  {
+    "userId": "dc242461-b94a-4d96-98f2-b6b9a92e9df0",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T01:48:55.169Z"
+  },
+  {
+    "userId": "be3ce6d1-1fcc-4afd-b572-83ae51300dbf",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T01:50:34.378Z"
+  },
+  {
+    "userId": "85f20e90-d1d5-41dd-a550-03481d424313",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T01:52:44.185Z"
+  },
+  {
+    "userId": "9d8186bb-25ac-454e-8009-dec9285b6e46",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T01:53:03.892Z"
+  },
+  {
+    "userId": "0fb994a7-4408-4d36-a24a-398490e72f0c",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T02:03:56.731Z"
+  },
+  {
+    "userId": "a6c2acc5-8f58-45d2-b2ac-4139060710d1",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T02:04:17.944Z"
+  },
+  {
+    "userId": "80883eff-a304-435a-a2b5-a491dc89594c",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T02:07:21.088Z"
+  },
+  {
+    "userId": "e398746b-e668-4c16-b10c-be75457ea266",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-18T02:07:24.956Z"
+  },
+  {
+    "userId": "ebe802d0-71ae-451f-96ca-8f6b133651f8",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-19T06:51:55.346Z"
+  }
+]
