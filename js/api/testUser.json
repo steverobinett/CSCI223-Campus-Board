@@ -29,8 +29,8 @@
   },
   {
     "userId": "dc242461-b94a-4d96-98f2-b6b9a92e9df0",
-    "firstName": "Another",
-    "lastName": "Test User",
+    "firstName": "Updated",
+    "lastName": "Name",
     "password": "hashedpwd",
     "dateCreated": "2026-04-18T01:48:55.169Z"
   },
@@ -89,5 +89,12 @@
     "lastName": "Test User",
     "password": "hashedpwd",
     "dateCreated": "2026-04-19T06:51:55.346Z"
+  },
+  {
+    "userId": "ce51dca6-8cc0-47b1-b6f8-98270bc29382",
+    "firstName": "Another",
+    "lastName": "Test User",
+    "password": "hashedpwd",
+    "dateCreated": "2026-04-22T02:08:41.550Z"
   }
 ]

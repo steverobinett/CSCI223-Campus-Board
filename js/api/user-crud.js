@@ -46,19 +46,23 @@ function getOne(userId){
     }
     return user
 }
+
+// update()  finds the user by userId, 
+// replaces the entry at that index, 
+// writes the updated array back to the file, 
+// and returns false if the user isn't found.
  function update(userObj){
-    // decided to use a 'full repacement approach
-    let updateObj = getOne(userObj.userId)
-    if (!updateObj){
-        console.log(`Update fail - invalid id`);
-        return false        
-    }
-    else{
-//         const updatedEvents = events.map(event =>
-//   event.id === updatedEvent.id ? updatedEvent : event
-// );
+    let data = getAll();
+
+    const index = data.findIndex(u => u.userId === userObj.userId);
+    if (index === -1) {
+        console.log(`User id ${userObj.userId} not found`);
+        return false;
     }
 
-    return true
+    data[index] = userObj;
+    fs.writeFileSync(DATAFILE, JSON.stringify(data, null, 2));
+
+    return true;
  }
 module.exports = {add, getAll, getOne, update}

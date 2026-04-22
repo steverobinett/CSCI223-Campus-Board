@@ -24,3 +24,14 @@ const userId = "dc242461-b94a-4d96-98f2-b6b9a92e9df0"
 const theUser = ds.getOne(userId)
 console.log(`User is ${JSON.stringify(theUser)}`);
 
+//Test: update
+const updatedUser = { ...theUser, firstName: "Updated", lastName: "Name" };
+const updateResult = ds.update(updatedUser);
+console.log(`Update result: ${updateResult}`);
+const afterUpdate = ds.getOne(userId);
+console.log(`After update: ${JSON.stringify(afterUpdate)}`);
+
+// Test: update with invalid userId
+const badUpdate = ds.update({ userId: "nonexistent-id", firstName: "Ghost" });
+console.log(`Update with bad id: ${badUpdate}`);
+
