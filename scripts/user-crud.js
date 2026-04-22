@@ -1,9 +1,9 @@
 const fs = require("fs");
+const { get } = require("http");
 const DATAFILE = "testUser.json";
 
 function add(userObj) {
   // Adds a new object to json file
-  let status = true
   let data = [];
 
   if (fs.existsSync(DATAFILE)) {
@@ -13,14 +13,14 @@ function add(userObj) {
     data = text ? JSON.parse(text) : [];
   }
   else{
-    status = false
+    return false
   }
 
   data.push(userObj); // add new object to array
 
   fs.writeFileSync(DATAFILE, JSON.stringify(data, null, 2)); //Save updated array
 
-  return status;
+  return true;
 }
 
 function getAll() {
@@ -34,32 +34,35 @@ function getAll() {
   }
    return data
 
-}
+} 
 
 function getOne(userId){
-    allUsers = getAll()
+    let allUsers = getAll()
 
-    user = allUsers.find(u => u.userId === userId)
+    const user = allUsers.find(u => u.userId === userId)
     if ( !user){
         console.log(`User id ${userId} not found`);
         return null
     }
     return user
 }
+
+// update()  finds the user by userId, 
+// replaces the entry at that index, 
+// writes the updated array back to the file, 
+// and returns false if the user isn't found.
  function update(userObj){
-    //TODO: determine which properties are updateable
+    let data = getAll();
 
-    let updateObj = getOne(userObj.userId)
-    if (!userObj){
-        console.log(`Update fail - invlaid id`);
-        return false        
-    }
-    else{
-        //update fields
-        //delete old obj
-        //push new obj
+    const index = data.findIndex(u => u.userId === userObj.userId);
+    if (index === -1) {
+        console.log(`User id ${userObj.userId} not found`);
+        return false;
     }
 
-    return true
+    data[index] = userObj;
+    fs.writeFileSync(DATAFILE, JSON.stringify(data, null, 2));
+
+    return true;
  }
 module.exports = {add, getAll, getOne, update}
