@@ -34,33 +34,30 @@ function getAll() {
   return data;
 }
 
-function getOne(eventId) {
+function getOne(id) {
   let allEvents = getAll();
 
-  const event = allEvents.find((e) => e.eventId === eventId);
+  const event = allEvents.find((e) => e.id === id);
   if (!event) {
-    console.log(`Event id ${eventId} not found`);
+    console.log(`Event id ${id} not found`);
     return null;
   }
   return event;
 }
 function update(eventObj) {
-  // decided to use a 'full repacement approach
-  let events = getAll();
+  let data = getAll();
 
-  let updateObj = events.find(e => e.eventId === eventObj.eventId);
+ const index = data.findIndex(e => e.id === eventObj.id);
 
-  if (!updateObj) {
-    console.log(`Update fail - invalid id`);
+  if (index === -1) {
+    console.log(`Event id ${eventObj.id} not found`);
     return false;
-  } else {
-    const updatedEvents = events.map(event => 
-        event.id === updatedEvents.id ? updatedEvent : event
-    );
   }
+  data[index] = eventObj;
+
+  fs.writeFileSync(DATAFILE, JSON.stringify(data, null, 2)); //Save updated array
 
   return true;
 }
 
-
-module.exports = { add, getAll, getOne, update, remove };
+module.exports = { add, getAll, getOne, update };

@@ -1,34 +1,33 @@
 const store        = require('./dataStore');
 const express      = require('express');
 const path         = require('path');
-const { saveUser } = require('./js/userRegistration');
+const { saveUser } = require('./userRegistration');
 const app          = express();
 const PORT         = 3000;
 
 // Path constants
-const STATIC = path.join(__dirname, 'static-content');
-const CSS    = path.join(__dirname, 'css');
-const JS     = path.join(__dirname, 'js');
+const PUBLIC = path.join(__dirname, '../public');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
-app.use('/css', express.static(CSS));
-app.use('/js', express.static(JS));
+app.use(express.static(PUBLIC));
 
 // Home
 app.get('/', (req, res) => {
-  res.sendFile(path.join(STATIC, 'index.html'));
+  res.sendFile(path.join(PUBLIC, 'index.html'));
 });
 
 // Login page
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(STATIC, 'login.html'));
+  res.sendFile(path.join(PUBLIC, 'login.html'));
 });
 
 // Login form submission
 app.post('/user/login', (req, res) => {
+  console.log("LOGIN BODY:", req.body);
+  
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -36,17 +35,22 @@ app.post('/user/login', (req, res) => {
   }
 
   const user = store.getOne('users.json', 'username', username);
+  console.log("FOUND USER:", user);
+  
+  
 
-  if (!user || user.passwordHash !== password) {
+  if (!user || user.password !== password) {
     return res.json({ success: false, message: 'Invalid username or password.' });
   }
+  console.log("LOGIN SUCCESS");
+  
 
   res.json({ success: true, message: 'Logged in.' });
 });
 
 // Register page
 app.get('/register', (req, res) => {
-  res.sendFile(path.join(STATIC, 'register.html'));
+  res.sendFile(path.join(PUBLIC, 'register.html'));
 });
 
 // POST /user/registration - form submission - Lei B

@@ -60,11 +60,11 @@ async function saveUser(user) {
 
         const newUser = {
             id: crypto.randomUUID(),
-            userName: user.userName,
+            username: user.userName,
             firstName: user.firstName,
             lastName: user.lastName,
             userEmail: user.email,
-            userPassword: hashedPwd
+            password: user.pwd
         };
         
         allUsers.push(newUser);
