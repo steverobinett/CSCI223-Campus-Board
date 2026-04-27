@@ -1,0 +1,42 @@
+[
+  {
+    "id": "b5453fe7-9b74-4767-be44-ef9b63084fa1",
+    "userName": "testuser01",
+    "firstName": "Alex",
+    "lastName": "Carter",
+    "userEmail": "alex.carter.test01@example.com",
+    "userPassword": "$2b$12$ofnDhsA5SnEyY5/e9gw4cupNOKd9xMwGS9Mlar8C7Lll9yiJo.p1O"
+  },
+  {
+    "id": "de3a20ac-6a00-4312-97fa-7e97a23f5e2b",
+    "userName": "testuser02",
+    "firstName": "Alex",
+    "lastName": "Carter",
+    "userEmail": "example@gmail.com",
+    "userPassword": "$2b$12$wxMoRIXjklGZzpIKGDBLVur9EY7knKb9CV6P1s6fwi8Fkyb0hHJvq"
+  },
+  {
+    "id": "62512dab-10e8-4406-b813-d9e480ed9525",
+    "userName": "testuser02",
+    "firstName": "Adam",
+    "lastName": "Lame",
+    "userEmail": "adam.lame.test02@example.com",
+    "userPassword": "$2b$12$V/5DzZXmr1NXBcv2Ex7rxeW46UbS656Opho/CV9xHi2Y6tpKnLCB2"
+  },
+  {
+    "id": "19cab821-792e-4bd6-bb65-24d2ca86b276",
+    "userName": "testuser03",
+    "firstName": "James",
+    "lastName": "Bond",
+    "userEmail": "james.bond.test03@example.com",
+    "userPassword": "$2b$12$zEz0ABh2c0jJFLFVxyIYhOS/83F.3h1qub0OFNwf6Csqo4IfL/7nW"
+  },
+  {
+    "id": "f71fe3cd-fe42-4e19-bafe-e36a9a49432f",
+    "username": "testuser04",
+    "firstName": "Zana",
+    "lastName": "Walls",
+    "userEmail": "example1@gmail.com",
+    "password": "TestPass123!"
+  }
+]
