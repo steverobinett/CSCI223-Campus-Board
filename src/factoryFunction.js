@@ -1,4 +1,5 @@
 /* Factory Functions - Event - LeiHala B*/
+const crypto = require("crypto");
 
 function createEvent(title, location, date) {
     return {
@@ -29,21 +30,25 @@ console.log(event1.getSummary());
 console.log(event2.isUpcoming());
 // Expected true
 
-function createUser(userName, firstName, lastName, email) {
+function createUser(id, userName, firstName, lastName, email, hashedPwd) {
     return {
+        id: crypto.randomUUID(),
         userName,
         firstName,
         lastName,
         email,
-    
-    getSummary() {
-        return `${userName} is ${firstName} ${lastName} and can be contacted at ${email}.`
-    }
-  }
+        hashedPwd,       
+
+        getSummary() {
+            return `${userName} is ${firstName} ${lastName} and can be contacted at ${email}.`
+        }
+    }                  
 }
 
+module.exports = { createUser, createEvent };
+
 // Usage
-const user1 = createUser("Elekia", "LeiHala", "Booth", "leihala.hand@gmail.com")
+const user1 = createUser("id", "Elekia", "LeiHala", "Booth", "leihala.hand@gmail.com", "hashedPwd");
 
 console.log(user1.getSummary());
 // Expected "Elekia is LeiHala Booth and can be contacted at leihala.hand@gmail.com"

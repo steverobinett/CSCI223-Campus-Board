@@ -2,6 +2,8 @@ const USR_REG = "users.json";
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const crypto = require("crypto");
+const fac = require("./factoryFunction");
+const ds = require("./dataStore");
 
 
 // Function to make sure passwords match by Lei B
@@ -43,7 +45,7 @@ async function verifyPassword(pwd, hashedPassword) {
 
 async function saveUser(user) {
     try {
-        let allUsers = [];
+        let allUsers = ds.getAll(USR_REG);
 
         if (fs.existsSync(USR_REG)) {
             const existingUsers = fs.readFileSync(USR_REG, "utf-8");
@@ -51,25 +53,16 @@ async function saveUser(user) {
         }
 
         // Duplicate email check
-        const existingEmail = allUsers.find(u => u.userEmail === user.email);
+        const existingEmail = allUsers.find(u => u.email === user.email);
         if (existingEmail) {
             throw new Error("Email already in use!")
         };
 
         const hashedPwd = await hashPassword(user.pwd);
-
-        const newUser = {
-            id: crypto.randomUUID(),
-            username: user.userName,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            userEmail: user.email,
-            password: user.pwd
-        };
         
-        allUsers.push(newUser);
-
-        fs.writeFileSync(USR_REG, JSON.stringify(allUsers, null, 2), "utf-8");
+        const newUser = fac.createUser(user.id, user.userName, user.firstName, user.lastName, user.email, hashedPwd);
+        
+        ds.add(USR_REG, newUser);
     }
     catch (err) {
         console.log(`Error on Save User: ${err.message}`);
