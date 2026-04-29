@@ -5,6 +5,7 @@ const { saveUser } = require('./userRegistration');
 const app          = express();
 const PORT         = 3000;
 
+
 // Path constants
 const PUBLIC = path.join(__dirname, '../public');
 
@@ -24,29 +25,31 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(PUBLIC, 'login.html'));
 });
 
-// Login form submission
-app.post('/user/login', (req, res) => {
-  console.log("LOGIN BODY:", req.body);
-  
-  const { username, password } = req.body;
+// Login Routing
+app.post('/user/login', async (req, res) => {
+  try {
+    const { username, pwd } = req.body;
+    const allUsers = store.getAll('users');
 
-  if (!username || !password) {
-    return res.json({ success: false, message: 'Username and password are required.' });
+    // Find entered user name.
+    const user = allUsers.find(u => u.username === username);
+
+    if (!user) {
+      return res.status(400).send('No account found with that username.');
+    };
+
+    const isValid = await saveUser.verifyPwd(pwd, user.hashedPwd);
+     if (!isValid) {
+      return res.status(400).send('Incorrect password')
+     }
+
+     res.redirect('/');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error logging in.');
   }
+})
 
-  const user = store.getOne('users.json', 'username', username);
-  console.log("FOUND USER:", user);
-  
-  
-
-  if (!user || user.password !== password) {
-    return res.json({ success: false, message: 'Invalid username or password.' });
-  }
-  console.log("LOGIN SUCCESS");
-  
-
-  res.json({ success: true, message: 'Logged in.' });
-});
 
 // Register page
 app.get('/register', (req, res) => {
