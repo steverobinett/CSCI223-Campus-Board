@@ -1,7 +1,8 @@
 const store        = require('./dataStore');
 const express      = require('express');
 const path         = require('path');
-const { saveUser } = require('./userRegistration');
+const { saveUser } = require('./js/userRegistration');
+const { saveEvent } = require('./js/api/event-crud');
 const app          = express();
 const PORT         = 3000;
 
@@ -67,6 +68,20 @@ app.post('/user/registration', async (req, res) => {
     }
     res.status(500).send('Error saving user.');
   }
+});
+
+// Create new event page
+app.get('/event/create', (req, res) => {
+  res.sendFile(path.join(STATIC, 'createNew.html'));
+});
+
+// POST /event/create - form submission
+app.post('/event/create', (req, res) => {
+  if (!req.body.title || !req.body.date || !req.body.time) {
+    return res.json({ success: false, message: 'Title, date and time are required.' });
+  }
+  const event = saveEvent(req.body);
+  res.json({ success: true, message: 'Event created.', event });
 });
 
 app.listen(PORT, () => {

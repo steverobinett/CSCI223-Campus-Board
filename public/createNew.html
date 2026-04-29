@@ -1,40 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Event</title>
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Event</title>
+  <link rel="stylesheet" href="/css/form.css">
+  <style>
+    .error { color: red; font-size: 13px; }
+  </style>
 </head>
 <body>
+  <div class="form-container">
+    <h1>Create New Event</h1>
 
-    <div class="container">
-        <h1>Create New Event</h1>
-
-        <form class="event-form">
-
-            <label for="id">Event ID</label>
-            <input type="text" id="id" name="id" placeholder="(auto-generated later)" disabled>
-
-            <label for="title">Event Title</label>
-            <input type="text" id="title" name="title" placeholder="Enter event title" required>
-
-            <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Enter event details" rows="4"></textarea>
-
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required>
-
-            <label for="time">Time</label>
-            <input type="time" id="time" name="time" required>
-
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location" placeholder="Enter location">
-
-            <button type="submit">Create Event</button>
-
-        </form>
+    <div class="registration-form">
+      <label><b>Event Title</b><span class="required">*</span></label>
+      <input type="text" id="title">
+      <span class="error" id="title-error"></span>
     </div>
 
+    <div class="registration-form">
+      <label><b>Description</b></label>
+      <textarea id="description" rows="4"></textarea>
+    </div>
+
+    <div class="registration-form">
+      <label><b>Date</b><span class="required">*</span></label>
+      <input type="date" id="date">
+      <span class="error" id="date-error"></span>
+    </div>
+
+    <div class="registration-form">
+      <label><b>Time</b><span class="required">*</span></label>
+      <input type="time" id="time">
+      <span class="error" id="time-error"></span>
+    </div>
+
+    <div class="registration-form">
+      <label><b>Location</b></label>
+      <input type="text" id="location">
+    </div>
+
+    <span class="error" id="form-error"></span>
+
+    <div class="SubmitCancel">
+      <button type="button" onclick="window.location.href='/'"><b>Cancel</b></button>
+      <button type="button" onclick="handleSubmit()"><b>Create Event</b></button>
+    </div>
+  </div>
+
+  <script>
+    function handleSubmit() {
+      const title       = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const date        = document.getElementById('date').value.trim();
+      const time        = document.getElementById('time').value.trim();
+      const location    = document.getElementById('location').value.trim();
+
+      // Validate required fields
+      let valid = true;
+
+      if (!title) {
+        document.getElementById('title-error').textContent = 'Title is required.';
+        valid = false;
+      }
+
+      if (!date) {
+        document.getElementById('date-error').textContent = 'Date is required.';
+        valid = false;
+      }
+
+      if (!time) {
+        document.getElementById('time-error').textContent = 'Time is required.';
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Call server
+      fetch('/event/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, description, date, time, location })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = '/';
+        } else {
+          document.getElementById('form-error').textContent = data.message;
+        }
+      })
+      .catch(() => {
+        document.getElementById('form-error').textContent = 'Server error. Please try again.';
+      });
+    }
+  </script>
 </body>
 </html>
