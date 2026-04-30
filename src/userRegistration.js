@@ -1,40 +1,81 @@
-const dataStore = require("./dataStore");
+const USR_REG = "users.json";
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const crypto = require("crypto");
 
-  
+
+// Function to make sure passwords match by Lei B
+async function checkPassword(user) {
+    let password1 = user.pwd.value;
+    let password2 = user.verifypwd.value;
+
+    // No password input
+    if (password1 == '')
+        alert("Please enter a Password")
+
+    else if (password2 == '')
+        alert("Please confirm Password")
+
+    // If passwords don't match
+    else if (password1 != password2) {
+        alert("\nPasswords do not match, please try again.")
+        return false;
+    }
+
+    // Continue if passwords match
+    else {
+        return true;
+    }
+}       
+    
 // Encrypt the password?
+
 async function hashPassword(pwd) {
-    return await bcrypt.hash(pwd, 12);
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(pwd, saltRounds);
+    return hashedPassword;
 }
 
 async function verifyPassword(pwd, hashedPassword) {
-    return await bcrypt.compare(pwd, hashedPassword);
+    const isValid = await bcrypt.compare(pwd, hashedPassword);
+    return isValid;
 }
 
-async function createUser(body) {
-    const hashedPwd = await hashPassword(body.pwd);
+async function saveUser(user) {
+    try {
+        let allUsers = [];
 
-    return {
-        userId: "",
-        username: body.userName,
-        firstName: body.firstName,
-        lastName: body.lastName,
-        userEmail: body.email,
-        password: hashedPwd
-    };
-}
-async function registerUser(body) {
-    const userObject = await createUser(body);
+        if (fs.existsSync(USR_REG)) {
+            const existingUsers = fs.readFileSync(USR_REG, "utf-8");
+            allUsers = JSON.parse(existingUsers);
+        }
 
-    const existingUser = dataStore.getOne(userObject);
+        // Duplicate email check
+        const existingEmail = allUsers.find(u => u.userEmail === user.email);
+        if (existingEmail) {
+            throw new Error("Email already in use!")
+        };
 
-    if (existingUser) {
-        throw new Error("Email already in use!");
+        const hashedPwd = await hashPassword(user.pwd);
+
+        const newUser = {
+            id: crypto.randomUUID(),
+            username: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            userEmail: user.email,
+            password: user.pwd
+        };
+        
+        allUsers.push(newUser);
+
+        fs.writeFileSync(USR_REG, JSON.stringify(allUsers, null, 2), "utf-8");
     }
-
-    dataStore.add(userObject);
-
-    return userObject;
+    catch (err) {
+        console.log(`Error on Save User: ${err.message}`);
+        throw err;
+        }
 }
-module.exports = {  hashPassword, verifyPassword, createUser, registerUser };
+
+module.exports = { checkPassword, hashPassword, verifyPassword, saveUser };
 
