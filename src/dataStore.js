@@ -18,7 +18,7 @@ module.exports = {
 
         return true;
     },
-    getOne(file, key, value) {// Get one = find one object by key/value
+    getOne(key) {// Get one = find one object by key/value
         let data = [];
 
         if (fs.existsSync(file)) {
@@ -26,7 +26,7 @@ module.exports = {
             data = text ? JSON.parse(text) : [];
         }
 
-        return data.find(item => item[key] === value) || null; //find first matching object
+        return data.find(item => item[key] === key) || null; //find first matching object
     
     },
 
