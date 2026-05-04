@@ -1,23 +1,24 @@
 const fs = require('fs');
+const USER_DATA_FILE = "users.json"
 
 module.exports = {
-    add(file, obj) { // Adds a new object to json file
+    add(obj) { // Adds a new object to json file
         let data = [];
 
-        if (fs.existsSync(file)) { //check if file exists
+        if (fs.existsSync(USER_DATA_FILE)) { //check if file exists
 
-            const text = fs.readFileSync(file, 'utf-8'); //read file and convert json text to array
+            const text = fs.readFileSync(USER_DATA_FILE, 'utf-8'); //read file and convert json text to array
             data = text ? JSON.parse(text) : [];
 
         }
 
         data.push(obj); // add new object to array
 
-        fs.writeFileSync(file, JSON.stringify(data, null, 2)); //Save updated array
+        fs.writeFileSync(USER_DATA_FILE, JSON.stringify(data, null, 2)); //Save updated array
 
-        return obj;
+        return true;
     },
-    getOne(file, key, value) {// Get one = find one object by key/value
+    getOne(key) {// Get one = find one object by key/value
         let data = [];
 
         if (fs.existsSync(file)) {
@@ -25,7 +26,7 @@ module.exports = {
             data = text ? JSON.parse(text) : [];
         }
 
-        return data.find(item => item[key] === value) || null; //find first matching object
+        return data.find(item => item[key] === key) || null; //find first matching object
     
     },
 
