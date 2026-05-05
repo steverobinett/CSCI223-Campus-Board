@@ -1,8 +1,14 @@
 const store        = require('./dataStore');
 const express      = require('express');
 const path         = require('path');
-const { saveUser } = require('./js/userRegistration');
-const { saveEvent } = require('./js/api/event-crud');
+const bcrypt       = require('bcrypt');
+
+const session      = require('express-session');
+require('dotenv').config();
+
+const { saveUser } = require('./userRegistration');
+const { saveEvent } = require('./events/event-crud');
+
 const app          = express();
 const PORT         = 3000;
 
@@ -12,6 +18,12 @@ const PUBLIC = path.join(__dirname, '../public');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
 // Serve static files
 app.use(express.static(PUBLIC));
 
@@ -20,13 +32,20 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(PUBLIC, 'index.html'));
 });
 
+app.get('/dashboard', (req, res) => {
+  if (!req.session.userId) {
+    return res.redirect('/login');
+  }
+  res.send('Welcome to the dashboard! You are logged in.');
+});
+
 // Login page
 app.get('/login', (req, res) => {
   res.sendFile(path.join(PUBLIC, 'login.html'));
 });
 
 // Login form submission
-app.post('/user/login', (req, res) => {
+app.post('/user/login', async (req, res) => {
   console.log("LOGIN BODY:", req.body);
   
   const { username, password } = req.body;
@@ -35,18 +54,30 @@ app.post('/user/login', (req, res) => {
     return res.json({ success: false, message: 'Username and password are required.' });
   }
 
-  const user = store.getOne('users.json', 'username', username);
+  const user = store.getOne({ userName: username });
   console.log("FOUND USER:", user);
   
   
+  const isValid = await bcrypt.compare(password, user.userPassword);
 
-  if (!user || user.password !== password) {
+  if (!user || !isValid) {
     return res.json({ success: false, message: 'Invalid username or password.' });
   }
+
+  // Creates a session for the user
+  req.session.userId = user.id || user._id;
+  
   console.log("LOGIN SUCCESS");
   
 
-  res.json({ success: true, message: 'Logged in.' });
+  res.json({ success: true, message: 'Login successful.' });
+});
+
+// logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.send('Logged out successfully.');
+  });
 });
 
 // Register page
@@ -72,7 +103,7 @@ app.post('/user/registration', async (req, res) => {
 
 // Create new event page
 app.get('/event/create', (req, res) => {
-  res.sendFile(path.join(STATIC, 'createNew.html'));
+  res.sendFile(path.join(PUBLIC, 'createNew.html'));
 });
 
 // POST /event/create - form submission
