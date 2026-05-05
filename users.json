@@ -38,5 +38,13 @@
     "lastName": "Walls",
     "userEmail": "example1@gmail.com",
     "password": "TestPass123!"
+  },
+  {
+    "id": "4f6df8b6-b830-4471-991d-e13099f52c64",
+    "username": "testUser01",
+    "firstName": "Scott",
+    "lastName": "Lane",
+    "userEmail": "scott.lane.user01@example.com",
+    "password": "TestPass123!"
   }
 ]

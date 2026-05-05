@@ -18,24 +18,23 @@ module.exports = {
 
         return true;
     },
-    getOne(key) {// Get one = find one object by key/value
+    getOne(key, value) {// Get one = find one object by key/value
         let data = [];
 
-        if (fs.existsSync(file)) {
-            const text = fs.readFileSync(file, 'utf-8');
+        if (fs.existsSync(USER_DATA_FILE)) {
+            const text = fs.readFileSync(USER_DATA_FILE, 'utf-8');
             data = text ? JSON.parse(text) : [];
         }
 
-        return data.find(item => item[key] === key) || null; //find first matching object
-    
+        return data.find(item => item[key] === value) || null; //find first matching objecvalue
     },
 
-    getAll(file) { //Get all = return all objects
-        if (!fs.existsSync(file)) {
+    getAll() { //Get all = return all objects
+        if (!fs.existsSync(USER_DATA_FILE)) {
             return [];
         }
 
-        const text = fs.readFileSync(file, 'utf-8');
+        const text = fs.readFileSync(USER_DATA_FILE, 'utf-8');
 
         return text ? JSON.parse(text) : [];
 
