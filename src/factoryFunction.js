@@ -1,12 +1,4 @@
 const { v4: uuidv4 } = require('uuid');
-const crypto = require('crypto');
-
-// Hash password using built-in crypto
-function hashPassword(password) {
-    const salt = crypto.randomBytes(16).toString('hex'); // generate a random salt
-    const hash = crypto.scryptSync(password, salt, 64).toString('hex'); // hash the password with the salt
-    return `${salt}:${hash}`; // return both so we can verify later
-  }
 
 function createEvent(title, location, date, description, category, createdBy) {
   return {
@@ -35,7 +27,7 @@ function createUser(userName, firstName, lastName, email, password) {
     firstName:   firstName ?? '',
     lastName:    lastName  ?? '',
     email:       email     ?? '',
-    password:    hashPassword(password ?? ''),
+    password: password ?? '',
     dateCreated: new Date().toISOString(),
     getSummary() {
       return `${this.userName} is ${this.firstName} ${this.lastName} and can be contacted at ${this.email}.`;
