@@ -64,7 +64,7 @@ async function saveUser(user) {
             firstName: user.firstName,
             lastName: user.lastName,
             userEmail: user.email,
-            password: user.pwd
+            password: hashedPwd
         };
         
         allUsers.push(newUser);
