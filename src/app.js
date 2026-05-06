@@ -1,7 +1,7 @@
 const store        = require('./dataStore');
 const express      = require('express');
 const path         = require('path');
-const { saveUser } = require('./userRegistration');
+const { saveUser, verifyPassword } = require('./userRegistration');
 const app          = express();
 const PORT         = 3000;
 
@@ -29,7 +29,7 @@ app.get('/login', (req, res) => {
 app.post('/user/login', async (req, res) => {
   try {
     const { username, pwd } = req.body;
-    const allUsers = store.getAll('users');
+    const allUsers = store.getAll(path.join(__dirname, '../users.json'));
 
     // Find entered user name.
     const user = allUsers.find(u => u.username === username);
@@ -38,7 +38,11 @@ app.post('/user/login', async (req, res) => {
       return res.status(400).send('No account found with that username.');
     };
 
-    const isValid = await saveUser.verifyPwd(pwd, user.hashedPwd);
+    console.log('req.body:', req.body);
+    console.log('allUsers:', allUsers);
+    console.log('user found:', user);
+
+    const isValid = await verifyPassword(pwd, user.password);
      if (!isValid) {
       return res.status(400).send('Incorrect password')
      }
